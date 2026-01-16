@@ -29,20 +29,6 @@ const profileIcon = ({ color }: { color: string }) => (
 );
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  // On native, useClientOnlyValue always returns true
-  // On web, it handles the server/client rendering difference
-  // const headerShown = useClientOnlyValue(false, true);
-
-  // const screenOptions = useMemo(() => {
-  //   return {
-  //     tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-  //     // Disable the static render of the header on web
-  //     // to prevent a hydration error in React Navigation v6.
-  //     headerShown,
-  //   };
-  // }, [colorScheme, headerShown]);
-
   return (
     <Tabs>
       <Tabs.Screen

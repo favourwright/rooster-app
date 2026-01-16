@@ -14,6 +14,10 @@ module.exports = function (api) {
             'hugeicons:calendar-02',
             'hugeicons:brochure',
             'hugeicons:user-03',
+            'hugeicons:arrow-left-01',
+            'hugeicons:arrow-right-01',
+            'basil:calendar-outline',
+            'heroicons:ellipsis-vertical',
             // Add more icons here
           ],
         },
