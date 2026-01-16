@@ -1,106 +1,233 @@
-import { Text, View } from 'react-native';
-import { Agenda } from 'react-native-calendars';
+import React, { useState, FC } from 'react';
+import { View, Text, Pressable } from 'react-native';
+import { 
+  CalendarProvider, 
+  ExpandableCalendar, 
+  AgendaList,
+  DateData 
+} from 'react-native-calendars';
 
-const AGENDA_ITEMS = {
-  '2012-05-22': [{ name: 'item 1', height: 0, day: '' }],
-  '2012-05-23': [{ name: 'item 2', height: 80, day: '' }],
-  '2012-05-24': [],
-  '2012-05-25': [{ name: 'item 3', height: 0, day: '' }, { name: 'any js object', height: 0, day: '' }],
-};
+// Types
+interface AgendaItem {
+  hour: string;
+  title: string;
+  duration?: string;
+}
 
-const MARKED_DATES = {
-  '2012-05-16': {selected: true, marked: true},
-  '2012-05-17': {marked: true},
-  '2012-05-18': {disabled: true}
-};
+interface AgendaSection {
+  title: string;
+  data: AgendaItem[];
+}
 
-export default function PublicationsScreen() {
+type DayState = 'disabled' | 'today' | 'selected' | 'inactive' | '';
+
+interface CalendarDayProps {
+  date?: DateData;
+  state?: DayState;
+  marking?: any;
+  onPress?: (date: DateData) => void;
+}
+
+interface AgendaItemProps {
+  item: AgendaItem;
+}
+
+// Custom Calendar Day Component
+const CalendarDay: FC<CalendarDayProps> = ({ date, state, marking, onPress }) => {
+  const isToday = state === 'today';
+  const isSelected = state === 'selected';
+  const isDisabled = state === 'disabled';
+
+  // Get day name (Sun, Mon, etc.)
+  const dayName = date?.dateString 
+    ? new Date(date.dateString).toLocaleDateString('en-US', { weekday: 'short' })
+    : '';
+
   return (
-    <View className='bg-white flex-1'>
-      <Agenda
-        // The list of items that have to be displayed in agenda. If you want to render item as empty date
-        // the value of date key has to be an empty array []. If there exists no value for date key it is
-        // considered that the date in question is not yet loaded
-        items={AGENDA_ITEMS}
-        // By default, agenda dates are marked if they have at least one item, but you can override this if needed
-        markedDates={MARKED_DATES}
-        // Callback that gets called when items for a certain month should be loaded (month became visible)
-        loadItemsForMonth={month => {
-          console.log('trigger items loading');
-        }}
-        // Callback that fires when the calendar is opened or closed
-        onCalendarToggled={calendarOpened => {
-          console.log(calendarOpened);
-        }}
-        // Callback that gets called on day press
-        onDayPress={day => {
-          console.log('day pressed');
-        }}
-        // Callback that gets called when day changes while scrolling agenda list
-        onDayChange={day => {
-          console.log('day changed');
-        }}
-        // Initially selected day
-        selected={'2012-05-16'}
-        // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-        minDate={'2012-05-10'}
-        // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-        maxDate={'2012-05-30'}
-        // Max amount of months allowed to scroll to the past. Default = 50
-        pastScrollRange={50}
-        // Max amount of months allowed to scroll to the future. Default = 50
-        futureScrollRange={50}
-        // Specify how each item should be rendered in agenda
-        renderItem={(item, firstItemInDay) => {
-          return <View />;
-        }}
-        // Specify how each date should be rendered. day can be undefined if the item is not first in that day
-        renderDay={(day, item) => {
-          return <View />;
-        }}
-        // Specify how empty date content with no items should be rendered
-        renderEmptyDate={() => {
-          return <View />;
-        }}
-        // Specify how agenda knob should look like
-        renderKnob={() => {
-          return <View />;
-        }}
-        // Override inner list with a custom implemented component
-        // renderList={listProps => {
-        //   return <MyCustomList {...listProps} />;
-        // }}
-        // Specify what should be rendered instead of ActivityIndicator
-        renderEmptyData={() => {
-          return <View />;
-        }}
-        // Specify your item comparison function for increased performance
-        rowHasChanged={(r1, r2) => {
-          return r1.name !== r2.name;
-        }}
-        // Hide knob button. Default = false
-        hideKnob={true}
-        // When `true` and `hideKnob` prop is `false`, the knob will always be visible and the user will be able to drag the knob up and close the calendar. Default = false
-        showClosingKnob={false}
-        // If disabledByDefault={true} dates flagged as not disabled will be enabled. Default = false
-        disabledByDefault={true}
-        // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly
-        onRefresh={() => console.log('refreshing...')}
-        // Set this true while waiting for new data from a refresh
-        refreshing={false}
-        // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView
-        refreshControl={null}
-        // Agenda theme
-        theme={{
-          // ...calendarTheme,
-          agendaDayTextColor: 'yellow',
-          agendaDayNumColor: 'green',
-          agendaTodayColor: 'red',
-          agendaKnobColor: 'blue'
-        }}
-        // Agenda container style
-        style={{}}
-      />
+    <Pressable
+      onPress={() => date && onPress?.(date)}
+      disabled={isDisabled}
+      className={`h-20 items-center justify-center ${
+        isDisabled ? 'opacity-30' : ''
+      }`}
+    >
+      {/* Day Name */}
+      <Text className="mb-2 text-xs font-semibold uppercase text-gray-500">
+        {dayName}
+      </Text>
+      
+      {/* Day Number */}
+      <View
+        className={`h-10 w-10 items-center justify-center rounded-full ${
+          isSelected ? 'bg-blue-500' : isToday ? 'bg-blue-100' : ''
+        }`}
+      >
+        <Text
+          className={`text-base ${
+            isSelected
+              ? 'text-white font-bold'
+              : isToday
+              ? 'text-blue-600 font-bold'
+              : isDisabled
+              ? 'text-gray-300'
+              : 'text-gray-900'
+          }`}
+        >
+          {date?.day}
+        </Text>
+      </View>
+      
+      {/* Marked indicator dot */}
+      {marking?.marked && (
+        <View className="mt-1 h-1 w-1 rounded-full bg-blue-500" />
+      )}
+    </Pressable>
+  );
+};
+
+// Agenda Item Component
+const AgendaItemComponent: FC<AgendaItemProps> = ({ item }) => {
+  return (
+    <View className="flex-row border-b border-gray-200 bg-white p-5">
+      <View className="justify-center">
+        <View className="w-16">
+          <Text className="text-xs text-gray-600">{item.hour}</Text>
+        </View>
+      </View>
+      <View className="ml-4 flex-1">
+        <View className="mb-1">
+          <Text className="text-base font-semibold text-gray-900">
+            {item.title}
+          </Text>
+        </View>
+        {item.duration && (
+          <View className="mt-1">
+            <Text className="text-xs text-gray-500">{item.duration}</Text>
+          </View>
+        )}
+      </View>
     </View>
   );
-}
+};
+
+// Empty Date Component
+const EmptyDate: FC = () => {
+  return (
+    <View className="flex-1 px-5 pt-8 pb-20">
+      <Text className="text-sm italic text-gray-400">No events scheduled</Text>
+    </View>
+  );
+};
+
+// Main Component
+const ExpandableCalendarExample: FC = () => {
+  const [selectedDate, setSelectedDate] = useState<string>('2026-01-16');
+  
+  // Sample agenda items - grouped by date
+  const agendaItems: AgendaSection[] = [
+    {
+      title: '2026-01-15',
+      data: [
+        { hour: '9:00 AM', title: 'Team Meeting', duration: '1h' },
+        { hour: '2:00 PM', title: 'Project Review', duration: '30min' }
+      ]
+    },
+    {
+      title: '2026-01-16',
+      data: [
+        { hour: '10:00 AM', title: 'Client Call', duration: '45min' },
+        { hour: '3:00 PM', title: 'Design Sprint', duration: '2h' }
+      ]
+    },
+    {
+      title: '2026-01-17',
+      data: [
+        { hour: '11:00 AM', title: 'Lunch with Sarah', duration: '1h' }
+      ]
+    },
+    {
+      title: '2026-01-18',
+      data: []
+    },
+    {
+      title: '2026-01-19',
+      data: [
+        { hour: '9:30 AM', title: 'Standup', duration: '15min' },
+        { hour: '1:00 PM', title: 'Code Review', duration: '1h' },
+        { hour: '4:00 PM', title: 'Team Sync', duration: '30min' }
+      ]
+    },
+    {
+      title: '2026-01-20',
+      data: [
+        { hour: '10:00 AM', title: 'Workshop', duration: '3h' }
+      ]
+    },
+  ];
+
+  // Mark dates that have events
+  const markedDates = {
+    '2026-01-15': { marked: true },
+    '2026-01-16': { marked: true },
+    '2026-01-17': { marked: true },
+    '2026-01-19': { marked: true },
+    '2026-01-20': { marked: true },
+  };
+
+  const handleDateChanged = (date: string) => {
+    setSelectedDate(date);
+  };
+
+  const handleMonthChange = (month: DateData) => {
+    console.log('Month changed:', month);
+  };
+
+  return (
+    <View className="flex-1 bg-gray-50">
+      <CalendarProvider
+        date={selectedDate}
+        onDateChanged={handleDateChanged}
+        onMonthChange={handleMonthChange}
+        showTodayButton
+        disabledOpacity={0.6}
+      >
+        <ExpandableCalendar
+          theme={{
+            backgroundColor: '#ffffff',
+            calendarBackground: '#ffffff',
+            textSectionTitleColor: '#b6c1cd',
+            selectedDayBackgroundColor: '#3b82f6',
+            selectedDayTextColor: '#ffffff',
+            todayTextColor: '#3b82f6',
+            dayTextColor: '#2d4150',
+            textDisabledColor: '#d9e1e8',
+            dotColor: '#3b82f6',
+            selectedDotColor: '#ffffff',
+            arrowColor: '#f97316',
+            monthTextColor: '#3b82f6',
+            indicatorColor: '#3b82f6',
+          }}
+          firstDay={1}
+          markedDates={markedDates}
+          style={{ height: 120 }}
+          // Hide default day names
+          hideDayNames={true}
+          // Hide the knob (expand/collapse indicator)
+          hideKnob={true}
+          // Use custom day component that includes day names
+          disablePan={true}
+          dayComponent={CalendarDay}
+        />
+        
+        <AgendaList
+          sections={agendaItems}
+          renderItem={({ item }: { item: AgendaItem }) => (
+            <AgendaItemComponent item={item} />
+          )}
+        />
+      </CalendarProvider>
+    </View>
+  );
+};
+
+export default ExpandableCalendarExample;
