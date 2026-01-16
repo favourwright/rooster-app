@@ -1,9 +1,10 @@
-import { Tabs } from 'expo-router';
-import { ComponentProps } from 'react';
-import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { useColorScheme } from '@/components/useColorScheme';
 import Colors from '@/constants/Colors';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Tabs } from 'expo-router';
+import { ComponentProps, useMemo } from 'react';
+import { Iconify } from 'react-native-iconify';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -13,43 +14,63 @@ function TabBarIcon(props: {
   return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
 }
 
+// Define icon functions outside component for stable references
+const homeIcon = ({ color }: { color: string }) => (
+  <Iconify icon="solar:home-angle-outline" size={24} color={color} />
+);
+const roosterIcon = ({ color }: { color: string }) => (
+  <Iconify icon="hugeicons:calendar-02" size={24} color={color} />
+);
+const publicationsIcon = ({ color }: { color: string }) => (
+  <Iconify icon="hugeicons:brochure" size={24} color={color} />
+);
+const profileIcon = ({ color }: { color: string }) => (
+  <Iconify icon="hugeicons:user-03" size={24} color={color} />
+);
+
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  // On native, useClientOnlyValue always returns true
+  // On web, it handles the server/client rendering difference
+  // const headerShown = useClientOnlyValue(false, true);
+
+  // const screenOptions = useMemo(() => {
+  //   return {
+  //     tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+  //     // Disable the static render of the header on web
+  //     // to prevent a hydration error in React Navigation v6.
+  //     headerShown,
+  //   };
+  // }, [colorScheme, headerShown]);
 
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
+    <Tabs>
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: homeIcon,
         }}
       />
       <Tabs.Screen
         name="rooster"
         options={{
           title: 'Rooster',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: roosterIcon,
         }}
       />
       <Tabs.Screen
         name="publications"
         options={{
           title: 'Publications',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: publicationsIcon,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: profileIcon,
         }}
       />
     </Tabs>
