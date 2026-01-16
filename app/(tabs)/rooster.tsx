@@ -70,8 +70,27 @@ export default function RoosterScreen() {
         
         <AgendaList
           sections={MOCK_AGENDA_ITEMS}
+          renderSectionHeader={() => (
+            <View className="flex-row justify-between items-center bg-white border-y border-gray-300 px-6 py-3">
+              <Text className="text-lg font-semibold text-gray-600">
+                Room1
+              </Text>
+
+              <TouchableOpacity
+                activeOpacity={0.6}
+                className='items-center justify-center size-10 border border-black/10
+                rounded-lg'
+              >
+                <Iconify
+                  icon='hugeicons:arrow-right-01'
+                  size={24}
+                  color='black'
+                />
+              </TouchableOpacity>
+            </View>
+          )}
           renderItem={({ item }: { item: AgendaItemType }) => (
-            <AgendaItem item={item} />
+            <AgendaItem item={item} onPress={() => {}} />
           )}
         />
       </CalendarProvider>

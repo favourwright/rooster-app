@@ -1,27 +1,42 @@
 import React, { FC } from 'react';
-import { View, Text } from 'react-native';
-import { AgendaItemProps } from '@/types/calendar';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { AgendaItem as AgendaItemType } from '@/types/calendar';
+import ProfileDetails from '@/components/user/ProfileDetails';
 
-export const AgendaItem: FC<AgendaItemProps> = ({ item }) => {
+type AgendaItemProps = {
+  item: AgendaItemType
+  onPress?: () => void;
+}
+
+export const AgendaItem: FC<AgendaItemProps> = ({ item, onPress }) => {
   return (
-    <View className="flex-row border-b border-gray-200 bg-white p-5">
+    <View className="flex-row items-start bg-white p-3 px-6">
       <View className="justify-center">
         <View className="w-16">
-          <Text className="text-xs text-gray-600">{item.hour}</Text>
+          <Text className="text-lg text-gray-600 leading-none">{item.hour}</Text>
         </View>
       </View>
-      <View className="ml-4 flex-1">
-        <View className="mb-1">
+
+      <TouchableOpacity
+        activeOpacity={0.6}
+        onPress={onPress}
+        className="flex-1 p-2 rounded-lg border-l-2 gap-4"
+        style={{ borderColor: item.color, backgroundColor: `${item.color}15` }}
+      >
+        <View className="flex-row items-center justify-between">
           <Text className="text-base font-semibold text-gray-900">
             {item.title}
           </Text>
+          <Text className="text-base font-semibold" style={{ color: item.color }}>
+            {item.duration}
+          </Text>
         </View>
-        {item.duration && (
-          <View className="mt-1">
-            <Text className="text-xs text-gray-500">{item.duration}</Text>
-          </View>
-        )}
-      </View>
+
+        <ProfileDetails
+          name={item.team?.[0]?.name}
+          isAvailable={item.team?.[0]?.isAvailable}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

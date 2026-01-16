@@ -22,7 +22,7 @@ export const CalendarDay: FC<CalendarDayProps> = ({
       onPress={() => date && onPress?.(date)}
       disabled={isDisabled}
       className={twMerge(
-        'items-center justify-between gap-3 p-2 pb-6 rounded-full',
+        'items-center justify-between gap-1.5 p-2 pb-4 rounded-full',
         isDisabled ? 'opacity-40' : '',
         isToday ? 'bg-[#F3F4F6]' : '',
         isSelected && 'bg-[#F3F4F6]',
@@ -55,7 +55,7 @@ export const CalendarDay: FC<CalendarDayProps> = ({
       <View className='relative items-center'>
         <Text
           className={twMerge(
-            'text-sm font-semibold uppercase text-gray-400',
+            'text-base font-semibold text-gray-400',
             isSelected && 'text-gray-600'
           )}
         >
@@ -63,7 +63,7 @@ export const CalendarDay: FC<CalendarDayProps> = ({
         </Text>
         {/* Marked indicator dot */}
         {marking?.marked && (
-          <View className="mt-1 size-2 absolute top-full rounded-full bg-[#5653FC]" />
+          <View className="size-2 absolute top-full rounded-full bg-[#5653FC]" />
         )}
       </View>
       

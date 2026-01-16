@@ -4,6 +4,11 @@ export interface AgendaItem {
   hour: string;
   title: string;
   duration?: string;
+  color?: string;
+  team?: {
+    name: string;
+    isAvailable: boolean;
+  }[];
 }
 
 export interface AgendaSection {
@@ -18,10 +23,6 @@ export interface CalendarDayProps {
   state?: DayState;
   marking?: any;
   onPress?: (date: DateData) => void;
-}
-
-export interface AgendaItemProps {
-  item: AgendaItem;
 }
 
 export interface CalendarTheme {
