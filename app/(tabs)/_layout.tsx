@@ -15,12 +15,14 @@ export default function TabLayout() {
   return (
     <Tabs
       tabBar={(props)=><TabBar {...props} />}
+      screenOptions={{
+        headerShown: false
+      }}
     >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          headerShown: false,
           tabBarIcon: (props)=><TabBarIcon name="solar:home-angle-outline" {...props} />,
         }}
       />

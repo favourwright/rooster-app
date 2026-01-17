@@ -24,6 +24,7 @@ export default function RoosterScreen() {
   
   useLayoutEffect(() => {
     navigation.setOptions({
+      headerShown: true,
       headerTitle: () => null,
       headerLeft: () => (
         <Text className='text-2xl font-bold ml-6'>Mijn rooster</Text>

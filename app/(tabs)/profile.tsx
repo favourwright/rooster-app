@@ -1,9 +1,5 @@
-import { Text, View } from 'react-native';
+import EmptyScreen from '@/components/EmptyScreen';
 
 export default function ProfileScreen() {
-  return (
-    <View className='bg-white'>
-      <Text className='text-red-700'>Hello World</Text>
-    </View>
-  );
+  return <EmptyScreen />
 }
