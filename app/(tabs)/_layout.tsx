@@ -1,62 +1,47 @@
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { useColorScheme } from '@/components/useColorScheme';
-import Colors from '@/constants/Colors';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
-import { ComponentProps, useMemo } from 'react';
+import { ComponentProps } from 'react';
 import { Iconify } from 'react-native-iconify';
+import { TabBar } from '@/components/TabBar';
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: ComponentProps<typeof FontAwesome>['name'];
+  name: ComponentProps<typeof Iconify>['icon'];
   color: string;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <Iconify icon={props.name} size={24} color={props.color} />;
 }
-
-// Define icon functions outside component for stable references
-const homeIcon = ({ color }: { color: string }) => (
-  <Iconify icon="solar:home-angle-outline" size={24} color={color} />
-);
-const roosterIcon = ({ color }: { color: string }) => (
-  <Iconify icon="hugeicons:calendar-02" size={24} color={color} />
-);
-const publicationsIcon = ({ color }: { color: string }) => (
-  <Iconify icon="hugeicons:brochure" size={24} color={color} />
-);
-const profileIcon = ({ color }: { color: string }) => (
-  <Iconify icon="hugeicons:user-03" size={24} color={color} />
-);
 
 export default function TabLayout() {
   return (
-    <Tabs>
+    <Tabs
+      tabBar={(props)=><TabBar {...props} />}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: homeIcon,
+          tabBarIcon: (props)=><TabBarIcon name="solar:home-angle-outline" {...props} />,
         }}
       />
       <Tabs.Screen
         name="rooster"
         options={{
           title: 'Rooster',
-          tabBarIcon: roosterIcon,
+          tabBarIcon: (props)=><TabBarIcon name="hugeicons:calendar-02" {...props} />,
         }}
       />
       <Tabs.Screen
         name="publications"
         options={{
           title: 'Publications',
-          tabBarIcon: publicationsIcon,
+          tabBarIcon: (props)=><TabBarIcon name="hugeicons:brochure" {...props} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: 'Profile',
-          tabBarIcon: profileIcon,
+          tabBarIcon: (props)=><TabBarIcon name="hugeicons:user-03" {...props} />,
         }}
       />
     </Tabs>
