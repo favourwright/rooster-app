@@ -25,7 +25,7 @@ A modern cross-platform schedule management application built with React Native 
    ```bash
    npx expo start
    ```
-   This launches the Expo development environment, allowing you to run the app on different platforms.
+   This launches the Expo development environment, allowing you to run the app on different platforms (We're using Expo go).
 
 ## Libraries and Dependencies
 
