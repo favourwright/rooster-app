@@ -37,7 +37,7 @@ const notifications = [
 
 export const AgendaDetailsModal = forwardRef<BottomSheetModal, AgendaDetailsModalProps>(
   ({ agendaItem }, ref) => {
-    const snapPoints = useMemo(() => ['50%'], []);
+    const snapPoints = useMemo(() => ['90%'], []);
     
     const closeModal = useCallback(() => {
       if (ref && typeof ref !== 'function') {
@@ -62,6 +62,7 @@ export const AgendaDetailsModal = forwardRef<BottomSheetModal, AgendaDetailsModa
         ref={ref}
         snapPoints={snapPoints}
         enablePanDownToClose={true}
+        enableDynamicSizing={false}
         detached={true}
         bottomInset={10}
         style={{ marginHorizontal: 10 }}
@@ -73,8 +74,11 @@ export const AgendaDetailsModal = forwardRef<BottomSheetModal, AgendaDetailsModa
           marginTop: 10,
         }}
       >
-        <BottomSheetScrollView>
-          <View className='flex-1 px-6 flex-row justify-between items-center gap-2'>
+        <BottomSheetScrollView 
+          contentContainerStyle={{ paddingBottom: 20 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <View className='px-6 pt-4 flex-row justify-between items-center gap-2'>
             <TouchableOpacity
               activeOpacity={0.6}
               className='items-center justify-center size-10 border border-black/10 rounded-lg'
@@ -101,7 +105,7 @@ export const AgendaDetailsModal = forwardRef<BottomSheetModal, AgendaDetailsModa
 
           {/* Header Section */}
           <View className="px-6 pt-4 pb-6 border-b border-gray-200">
-            <View className="flex-row items-center gap-3 mb-4">
+            <View className="flex-row items-center gap-3">
               <Iconify icon="hugeicons:time-quarter" size={20} color="#666" />
               <Text className="text-base text-gray-700">
                 8:00am - 12:00pm
@@ -177,7 +181,7 @@ export const AgendaDetailsModal = forwardRef<BottomSheetModal, AgendaDetailsModa
           </View>
 
           {/* Notifications Section */}
-          <View className="p-6 pb-8">
+          <View className="p-6">
             <View className="flex-row items-center justify-between mb-4">
               <Text className="text-lg font-semibold">Notities</Text>
               <View className="flex-row items-center gap-2 bg-gray-100 px-4 py-2 rounded-full">
