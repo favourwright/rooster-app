@@ -22,6 +22,7 @@ module.exports = function (api) {
             'hugeicons:time-quarter',
             'hugeicons:building-03',
             'hugeicons:arrow-right-02',
+            'hugeicons:search-01',
             // Add more icons here
           ],
         },

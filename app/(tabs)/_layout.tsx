@@ -20,6 +20,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home',
+          headerShown: false,
           tabBarIcon: (props)=><TabBarIcon name="solar:home-angle-outline" {...props} />,
         }}
       />
