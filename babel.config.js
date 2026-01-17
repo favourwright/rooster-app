@@ -18,6 +18,10 @@ module.exports = function (api) {
             'hugeicons:arrow-right-01',
             'basil:calendar-outline',
             'heroicons:ellipsis-vertical',
+            'hugeicons:multiplication-sign',
+            'hugeicons:time-quarter',
+            'hugeicons:building-03',
+            'hugeicons:arrow-right-02',
             // Add more icons here
           ],
         },

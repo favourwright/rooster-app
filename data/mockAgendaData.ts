@@ -72,24 +72,71 @@ const AGENDA_TEMPLATES: AgendaItem[][] = [
         { name: 'Omar r.', isAvailable: true },
         { name: 'Elijah a', isAvailable: false }
       ]
-    }
+    },
+    // AFTERNOON ITEMS FOR TODAY
+    {
+      hour: '13:00',
+      title: 'Lunch Break',
+      duration: '12:00 - 20:00',
+      color: '#009FE3',
+      team: [
+        { name: 'Omar r.', isAvailable: true },
+        { name: 'Elijah a', isAvailable: false }
+      ]
+    },
+    {
+      hour: '14:00',
+      title: 'Client Call',
+      duration: '12:00 - 20:00',
+      color: '#5653FC',
+      team: [
+        { name: 'Omar r.', isAvailable: true },
+        { name: 'Elijah a', isAvailable: false }
+      ]
+    },
+    {
+      hour: '15:00',
+      title: 'Design Review',
+      duration: '12:00 - 20:00',
+      color: '#E35F00',
+      team: [
+        { name: 'Omar r.', isAvailable: true },
+        { name: 'Elijah a', isAvailable: false }
+      ]
+    },
+    {
+      hour: '16:00',
+      title: 'Team Wrap-up',
+      duration: '12:00 - 20:00',
+      color: '#009FE3',
+      team: [
+        { name: 'Omar r.', isAvailable: true },
+        { name: 'Elijah a', isAvailable: false }
+      ]
+    },
+    // EVENING ITEMS
+    {
+      hour: '18:00',
+      title: 'Team Meeting',
+      duration: '12:00 - 20:00',
+      color: '#5653FC',
+      team: [
+        { name: 'Omar r.', isAvailable: true },
+        { name: 'Elijah a', isAvailable: false }
+      ]
+    },
+    // NIGHT ITEMS
+    {
+      hour: '20:00',
+      title: 'Dinner',
+      duration: '12:00 - 20:00',
+      color: '#E35F00',
+      team: [
+        { name: 'Omar r.', isAvailable: true },
+        { name: 'Elijah a', isAvailable: false }
+      ]
+    },
   ],
-  // [
-  //   { hour: '10:00 AM', title: 'Client Call', duration: '45min' },
-  //   { hour: '3:00 PM', title: 'Design Sprint', duration: '2h' }
-  // ],
-  // [
-  //   { hour: '11:00 AM', title: 'Lunch with Sarah', duration: '1h' }
-  // ],
-  // [], // Empty day
-  // [
-  //   { hour: '9:30 AM', title: 'Standup', duration: '15min' },
-  //   { hour: '1:00 PM', title: 'Code Review', duration: '1h' },
-  //   { hour: '4:00 PM', title: 'Team Sync', duration: '30min' }
-  // ],
-  // [
-  //   { hour: '10:00 AM', title: 'Workshop', duration: '3h' }
-  // ],
 ];
 
 const formatDate = (date: Date): string => {
@@ -138,7 +185,6 @@ export const generateMarkedDates = (): { [key: string]: { marked: boolean } } =>
   
   return markedDates;
 };
-
 
 // Export the generated data
 export const MOCK_AGENDA_ITEMS = generateAgendaItems();
