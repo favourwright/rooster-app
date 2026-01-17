@@ -13,13 +13,13 @@ export type AgendaDetailsModalProps = {
   agendaItem?: AgendaItem;
 }
 
-// Mock team members - replace with actual data
+// Mock team members
 const teamMembers = [
   { name: 'Omar r.', avatar: 'https://i.pravatar.cc/150?img=12', time: '4:00 - 8:00' },
   { name: 'Elijah a.', avatar: 'https://i.pravatar.cc/150?img=13', time: '8:00 - 12:00' },
 ];
 
-// Mock notifications - replace with actual data
+// Mock notifications
 const notifications = [
   { 
     name: 'Omar r', 

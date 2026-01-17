@@ -1,13 +1,4 @@
-import { useEffect } from 'react';
 import { View } from 'react-native';
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withRepeat,
-  withSequence,
-  withTiming,
-  Easing,
-} from 'react-native-reanimated';
 
 interface CurrentTimeIndicatorProps {
   currentMinutes?: number;
@@ -37,7 +28,7 @@ export const CurrentTimeIndicator = ({
       style={{ transform: [{ translateY: verticalOffset }] }}
     >
       {/* dot */}
-      <Animated.View 
+      <View 
         className='size-3 rounded-full bg-[#7C3AED] -ml-1.5'
       />
       
