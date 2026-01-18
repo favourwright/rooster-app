@@ -18,6 +18,7 @@ import { Iconify } from 'react-native-iconify';
 import { useNavigation } from 'expo-router';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { AgendaDetailsModal } from '@/components/calendar/AgendaDetailsModal';
+// import 
 
 export default function RoosterScreen() {
   const navigation = useNavigation();
@@ -66,7 +67,7 @@ export default function RoosterScreen() {
 
   return (
     <>
-      <View className="flex-1">
+      <View className="flex-1 bg-white">
         <CalendarProvider
           date={selectedDate}
           onDateChanged={handleDateChanged}
